@@ -1,4 +1,4 @@
-package com.example.PerformanceWorkshopAPI;
+package com.example.performanceWorkshopAPI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

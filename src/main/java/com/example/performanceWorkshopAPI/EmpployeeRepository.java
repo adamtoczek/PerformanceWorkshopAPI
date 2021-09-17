@@ -1,4 +1,4 @@
-package com.example.PerformanceWorkshopAPI;
+package com.example.performanceWorkshopAPI;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

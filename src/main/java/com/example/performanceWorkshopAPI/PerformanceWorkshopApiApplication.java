@@ -1,4 +1,4 @@
-package com.example.PerformanceWorkshopAPI;
+package com.example.performanceWorkshopAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
