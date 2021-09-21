@@ -309,4 +309,4 @@ exec "$JAVACMD" \
   "-Dmaven.home=${M2_HOME}" "-Dmaven.multiModuleProjectDirectory=${MAVEN_PROJECTBASEDIR}" \
   ${WRAPPER_LAUNCHER} $MAVEN_CONFIG "$@"
 
-#has to force commit the file as changing just line separator does not trigger the change detection
+#has to force commit the file as changing just line separator does not trigger the change detection, and again
