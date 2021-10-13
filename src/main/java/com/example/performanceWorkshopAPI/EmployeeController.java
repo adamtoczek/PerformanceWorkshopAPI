@@ -47,8 +47,8 @@ class EmployeeController {
     }
 
     @PostMapping("/employees")
-    ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
-
+    ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee, @RequestHeader("xrf-token") String headerToken) {
+        checkToken(headerToken, tokenRepo);
         EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
 
         return ResponseEntity //
@@ -58,8 +58,8 @@ class EmployeeController {
     // Single item
 
     @GetMapping("/employees/{id}")
-    EntityModel<Employee> one(@PathVariable Long id) {
-
+    EntityModel<Employee> one(@PathVariable Long id, @RequestHeader("xrf-token") String headerToken) {
+        checkToken(headerToken, tokenRepo);
         Employee employee = repository.findById(id) //
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
 
@@ -67,8 +67,8 @@ class EmployeeController {
     }
 
     @PutMapping("/employees/{id}")
-    ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
-
+    ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id, @RequestHeader("xrf-token") String headerToken) {
+        checkToken(headerToken, tokenRepo);
         Employee updatedEmployee = repository.findById(id) //
                 .map(employee -> {
                     employee.setName(newEmployee.getName());
@@ -88,8 +88,8 @@ class EmployeeController {
     }
 
     @DeleteMapping("/employees/{id}")
-    ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
-
+    ResponseEntity<?> deleteEmployee(@PathVariable Long id, @RequestHeader("xrf-token") String headerToken) {
+        checkToken(headerToken, tokenRepo);
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();
