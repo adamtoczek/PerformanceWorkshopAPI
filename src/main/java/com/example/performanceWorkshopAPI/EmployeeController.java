@@ -9,6 +9,7 @@ import com.example.performanceWorkshopAPI.xrfToken.XRFToken;
 import com.example.performanceWorkshopAPI.xrfToken.XRFTokenMissingException;
 import com.example.performanceWorkshopAPI.xrfToken.XRFTokenRepository;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -36,14 +37,27 @@ class EmployeeController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("/employees")
-    CollectionModel<EntityModel<Employee>> all(@RequestHeader("xrf-token") String headerToken) {
+    CollectionModel<EntityModel<Employee>> all(@RequestHeader("xrf-token") String headerToken, @RequestParam(required = false) String lastName, @RequestParam(required = false) String firstName) {
         checkToken(headerToken, tokenRepo);
-
-        List<EntityModel<Employee>> employees = repository.findAll().stream() //
+        List<EntityModel<Employee>> employees;
+        if (lastName!=null || firstName!=null) {
+            Employee employee = new Employee();
+            employee.setLastName(lastName);
+            employee.setFirstName(firstName);
+            ExampleMatcher matcher = ExampleMatcher.matchingAny()
+                    .withIncludeNullValues()
+                    .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+            Example<Employee> example = Example.of(employee, matcher);
+            employees = repository.findAll(example).stream() //
+                    .map(assembler::toModel) //
+                    .collect(Collectors.toList());
+        }
+        else
+            employees = repository.findAll().stream() //
                 .map(assembler::toModel) //
                 .collect(Collectors.toList());
 
-        return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).all("")).withSelfRel());
+        return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).all("", "", "")).withSelfRel());
     }
 
     @PostMapping("/employees")
