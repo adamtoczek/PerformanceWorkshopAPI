@@ -1,5 +1,7 @@
 package com.example.performanceWorkshopAPI;
 
+import com.example.performanceWorkshopAPI.xrfToken.XRFToken;
+import com.example.performanceWorkshopAPI.xrfToken.XRFTokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -19,4 +21,13 @@ class LoadDatabase {
             log.info("Preloading " + repository.save(new Employee("Frodo Baggins", "thief")));
         };
     }
+
+    @Bean
+    CommandLineRunner initTokenDatabase(XRFTokenRepository repository) {
+        return args -> {
+            log.info("Preloading " + repository.save(new XRFToken("1234")));
+
+        };
+    }
+
 }

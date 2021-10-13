@@ -14,6 +14,6 @@ class EmployeeModelAssembler implements RepresentationModelAssembler<Employee, E
 
         return EntityModel.of(employee, //
                 linkTo(methodOn(EmployeeController.class).one(employee.getId())).withSelfRel(),
-                linkTo(methodOn(EmployeeController.class).all()).withRel("employees"));
+                linkTo(methodOn(EmployeeController.class).all("")).withRel("employees"));
     }
 }
