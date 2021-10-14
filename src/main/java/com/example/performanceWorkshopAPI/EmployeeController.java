@@ -1,6 +1,7 @@
 package com.example.performanceWorkshopAPI;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import com.example.performanceWorkshopAPI.xrfToken.XRFTokenRepository;
 import org.springframework.data.domain.Example;
@@ -10,6 +11,8 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.swing.text.html.Option;
 
 import static com.example.performanceWorkshopAPI.xrfToken.XRFToken.checkToken;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -32,7 +35,9 @@ class EmployeeController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("/employees")
-    CollectionModel<EntityModel<Employee>> all(@RequestHeader("xrf-token") String headerToken, @RequestParam(required = false) String lastName, @RequestParam(required = false) String firstName) {
+    CollectionModel<EntityModel<Employee>> all(@RequestHeader("xrf-token") String headerToken
+            , @RequestParam(required = false) String lastName
+            , @RequestParam(required = false) String firstName) {
         checkToken(headerToken, tokenRepo);
         List<EntityModel<Employee>> employees;
         if (lastName!=null || firstName!=null) {
@@ -52,17 +57,14 @@ class EmployeeController {
                 .map(assembler::toModel) //
                 .collect(Collectors.toList());
 
-        return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).all("", "", "")).withSelfRel());
+        return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).all("",lastName, firstName)).withSelfRel().expand());
     }
 
     @PostMapping("/employees")
-    ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee, @RequestHeader("xrf-token") String headerToken) {
+    EntityModel<Employee> newEmployee(@RequestBody Employee newEmployee, @RequestHeader("xrf-token") String headerToken) {
         checkToken(headerToken, tokenRepo);
-        EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
-
-        return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+        Employee employee = repository.save(newEmployee);
+        return assembler.toModel(employee);
     }
     // Single item
 
