@@ -47,6 +47,15 @@ public class XRFToken {
         return this.token;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof XRFToken))
+            return false;
+        XRFToken token = (XRFToken) o;
+        return Objects.equals(this.hashCode(),token.hashCode());
+    }
     public static void checkToken(String headerToken, XRFTokenRepository tokenRepo) {
         XRFToken token = new XRFToken(headerToken);
         Example<XRFToken> tokenExample = Example.of(token);
