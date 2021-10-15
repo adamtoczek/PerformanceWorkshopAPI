@@ -1,4 +1,4 @@
-name: Build
+name: Sonar analyze on non-main branch
 on:
   push:
     branches-ignore:
