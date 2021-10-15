@@ -1,4 +1,4 @@
-package com.example.performanceWorkshopAPI.xrfToken;
+package com.example.performanceworkshopapi.xrfToken;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

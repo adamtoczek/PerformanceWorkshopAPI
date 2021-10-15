@@ -1,7 +1,7 @@
-package com.example.performanceWorkshopAPI;
+package com.example.performanceworkshopapi;
 
-import com.example.performanceWorkshopAPI.xrfToken.XRFToken;
-import com.example.performanceWorkshopAPI.xrfToken.XRFTokenRepository;
+import com.example.performanceworkshopapi.xrfToken.XRFToken;
+import com.example.performanceworkshopapi.xrfToken.XRFTokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

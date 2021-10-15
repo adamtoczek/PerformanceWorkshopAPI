@@ -1,4 +1,4 @@
-package com.example.performanceWorkshopAPI;
+package com.example.performanceworkshopapi;
 import java.util.Objects;
 
 import javax.persistence.Entity;

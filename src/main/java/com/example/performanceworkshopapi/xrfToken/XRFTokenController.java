@@ -1,4 +1,4 @@
-package com.example.performanceWorkshopAPI.xrfToken;
+package com.example.performanceworkshopapi.xrfToken;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

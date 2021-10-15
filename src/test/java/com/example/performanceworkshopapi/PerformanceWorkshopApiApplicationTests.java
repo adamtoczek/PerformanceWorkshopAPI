@@ -1,6 +1,6 @@
-package com.example.performanceWorkshopAPI;
+package com.example.performanceworkshopapi;
 
-import com.example.performanceWorkshopAPI.xrfToken.XRFTokenController;
+import com.example.performanceworkshopapi.xrfToken.XRFTokenController;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;

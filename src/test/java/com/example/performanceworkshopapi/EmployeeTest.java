@@ -1,4 +1,4 @@
-package com.example.performanceWorkshopAPI;
+package com.example.performanceworkshopapi;
 
 import org.junit.jupiter.api.Test;
 

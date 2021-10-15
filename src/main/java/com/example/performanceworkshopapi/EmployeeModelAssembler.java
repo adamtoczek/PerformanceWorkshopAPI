@@ -1,4 +1,4 @@
-package com.example.performanceWorkshopAPI;
+package com.example.performanceworkshopapi;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 

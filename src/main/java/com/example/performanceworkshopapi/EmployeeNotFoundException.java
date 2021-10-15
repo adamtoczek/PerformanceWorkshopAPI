@@ -1,4 +1,4 @@
-package com.example.performanceWorkshopAPI;
+package com.example.performanceworkshopapi;
 
 class EmployeeNotFoundException extends RuntimeException {
 
