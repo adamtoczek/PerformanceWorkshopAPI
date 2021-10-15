@@ -1,7 +1,6 @@
 package com.example.performanceWorkshopAPI;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import com.example.performanceWorkshopAPI.xrfToken.XRFTokenRepository;
 import org.springframework.data.domain.Example;
@@ -11,8 +10,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.text.html.Option;
 
 import static com.example.performanceWorkshopAPI.xrfToken.XRFToken.checkToken;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
