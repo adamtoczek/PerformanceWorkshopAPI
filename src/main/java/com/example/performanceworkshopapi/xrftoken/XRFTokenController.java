@@ -1,4 +1,4 @@
-package com.example.performanceworkshopapi.xrfToken;
+package com.example.performanceworkshopapi.xrftoken;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +13,7 @@ public class XRFTokenController {
     }
 
     @PostMapping("/xrf-token")
-    XRFToken newXRFToken(XRFToken newXRFToken) {
+    public XRFToken newXRFToken(XRFToken newXRFToken) {
         return tokenRepo.save(newXRFToken);
     }
 }

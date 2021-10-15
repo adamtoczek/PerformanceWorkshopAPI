@@ -1,6 +1,6 @@
 package com.example.performanceworkshopapi;
 
-import com.example.performanceworkshopapi.xrfToken.XRFToken;
+import com.example.performanceworkshopapi.xrftoken.XRFToken;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

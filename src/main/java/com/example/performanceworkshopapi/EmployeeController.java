@@ -2,7 +2,7 @@ package com.example.performanceworkshopapi;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import com.example.performanceworkshopapi.xrfToken.XRFTokenRepository;
+import com.example.performanceworkshopapi.xrftoken.XRFTokenRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.hateoas.CollectionModel;
@@ -11,7 +11,7 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.performanceworkshopapi.xrfToken.XRFToken.checkToken;
+import static com.example.performanceworkshopapi.xrftoken.XRFToken.checkToken;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -32,7 +32,7 @@ class EmployeeController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("/employees")
-    CollectionModel<EntityModel<Employee>> all(@RequestHeader("xrf-token") String headerToken
+    public CollectionModel<EntityModel<Employee>> all(@RequestHeader("xrf-token") String headerToken
             , @RequestParam(required = false) String lastName
             , @RequestParam(required = false) String firstName) {
         checkToken(headerToken, tokenRepo);
@@ -58,7 +58,7 @@ class EmployeeController {
     }
 
     @PostMapping("/employees")
-    EntityModel<Employee> newEmployee(@RequestBody Employee newEmployee, @RequestHeader("xrf-token") String headerToken) {
+    public EntityModel<Employee> newEmployee(@RequestBody Employee newEmployee, @RequestHeader("xrf-token") String headerToken) {
         checkToken(headerToken, tokenRepo);
         Employee employee = repository.save(newEmployee);
         return assembler.toModel(employee);
@@ -66,7 +66,7 @@ class EmployeeController {
     // Single item
 
     @GetMapping("/employees/{id}")
-    EntityModel<Employee> one(@PathVariable Long id, @RequestHeader("xrf-token") String headerToken) {
+    public EntityModel<Employee> one(@PathVariable Long id, @RequestHeader("xrf-token") String headerToken) {
         checkToken(headerToken, tokenRepo);
         Employee employee = repository.findById(id) //
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
@@ -75,7 +75,7 @@ class EmployeeController {
     }
 
     @PutMapping("/employees/{id}")
-    ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id, @RequestHeader("xrf-token") String headerToken) {
+    public ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id, @RequestHeader("xrf-token") String headerToken) {
         checkToken(headerToken, tokenRepo);
         Employee updatedEmployee = repository.findById(id) //
                 .map(employee -> {
@@ -96,7 +96,7 @@ class EmployeeController {
     }
 
     @DeleteMapping("/employees/{id}")
-    ResponseEntity<?> deleteEmployee(@PathVariable Long id, @RequestHeader("xrf-token") String headerToken) {
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id, @RequestHeader("xrf-token") String headerToken) {
         checkToken(headerToken, tokenRepo);
         repository.deleteById(id);
 

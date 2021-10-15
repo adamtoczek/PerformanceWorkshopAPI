@@ -1,4 +1,4 @@
-package com.example.performanceworkshopapi.xrfToken;
+package com.example.performanceworkshopapi.xrftoken;
 
 public class XRFTokenMissingException extends RuntimeException {
     public XRFTokenMissingException() {
