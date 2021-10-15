@@ -35,6 +35,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B test --file pom.xml verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=adamtoczek_PerformanceWorkshopAPI
   deploy:
+    needs: build
     name: CI to Docker
     runs-on: ubuntu-latest
     steps:
