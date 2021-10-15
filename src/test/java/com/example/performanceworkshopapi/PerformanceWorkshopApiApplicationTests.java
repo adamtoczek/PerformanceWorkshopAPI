@@ -12,6 +12,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -51,7 +52,7 @@ class PerformanceWorkshopApiApplicationTests {
 
 	@Test
 	public void correctXRFShouldReturnAllEmployees () {
-		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees").then().statusCode(200).body("_embedded.employeeList", hasSize(1002));
+		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees").then().statusCode(200).body("_embedded.employeeList.size()", greaterThan(1001));
 	}
 
 	@Test
@@ -97,5 +98,20 @@ class PerformanceWorkshopApiApplicationTests {
 		given().when().post("http://localhost:" + port + "/xrf-token").then().statusCode(200).body("token", hasLength(36));
 	}
 
+	@Test
+	public void notFoundEmployeeShouldGive404 () {
+		String body = given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees/987456321").then().statusCode(404).extract().response().getBody().asString();
+		assertEquals("Could not find employee 987456321", body);
+	}
 
+	@Test
+	public void putNewEmployeeShouldReturn201() throws JSONException {
+		JSONObject newEmployee = new JSONObject();
+		newEmployee.put("firstName", "TestName");
+		newEmployee.put("lastName", "TestSurname");
+		newEmployee.put("role", "Test Role");
+		given().header("XRF-token","1234").header("Content-Type","application/json")
+				.body(newEmployee.toString()).when().put("http://localhost:" + port + "/employees/888888").then().statusCode(201);
+
+	}
 }
