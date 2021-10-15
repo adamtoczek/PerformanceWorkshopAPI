@@ -20,6 +20,9 @@ public class XRFTokenPOJO {
         this.token = token;
     }
 
+    public XRFTokenPOJO(){
+
+    }
 
     public XRFTokenPOJO(Long id, String token) {
         this.id = id;

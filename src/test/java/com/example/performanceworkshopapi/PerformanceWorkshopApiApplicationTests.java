@@ -11,8 +11,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -92,5 +91,11 @@ class PerformanceWorkshopApiApplicationTests {
 	public void employeeCanBeDeleted() {
 		given().header("XRF-token","1234").when().delete("http://localhost:" + port + "/employees/1").then().statusCode(204);
 	}
+
+	@Test
+	public void userCanCreateXRFToken() {
+		given().when().post("http://localhost:" + port + "/xrf-token").then().statusCode(200).body("token", hasLength(36));
+	}
+
 
 }
