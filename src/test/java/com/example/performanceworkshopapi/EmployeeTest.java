@@ -2,8 +2,7 @@ package com.example.performanceworkshopapi;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class EmployeeTest {
@@ -15,5 +14,15 @@ public class EmployeeTest {
         assertEquals(em1, em2);
     }
 
+    @Test
+    public void sameEmployeesShouldBeEqual(){
+        Employee em1 = new Employee("Firstname","LastName", "Role");
+        assertEquals(em1, em1);
+    }
 
+    @Test
+    public void employeeShouldNotEqualString(){
+        Employee em1 = new Employee("Firstname","LastName", "Role");
+        assertNotEquals(em1, "Firstname LastName");
+    }
 }
