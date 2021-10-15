@@ -3,6 +3,8 @@ package com.example.performanceWorkshopAPI;
 import com.example.performanceWorkshopAPI.xrfToken.XRFToken;
 import com.example.performanceWorkshopAPI.xrfToken.XRFTokenController;
 import io.restassured.RestAssured;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,5 +67,32 @@ class PerformanceWorkshopApiApplicationTests {
 		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees?lastName=Baggins").then().statusCode(200).body("_embedded.employeeList", hasSize(2));
 	}
 
+	@Test
+	public void employeeCanBeCreated() throws JSONException {
+		JSONObject newEmployee = new JSONObject();
+		newEmployee.put("firstName", "TestName");
+		newEmployee.put("lastName", "TestSurname");
+		newEmployee.put("role", "Test Role");
+		given().header("XRF-token","1234").header("Content-Type","application/json").body(newEmployee.toString()).when().post("http://localhost:" + port + "/employees").then().statusCode(200);
+	}
+
+	@Test
+	public void employeeCanBeUpdated() throws JSONException {
+		JSONObject newEmployee = new JSONObject();
+		newEmployee.put("firstName", "TestName");
+		newEmployee.put("lastName", "TestSurname");
+		newEmployee.put("role", "Test Role");
+		String id = given().header("XRF-token","1234").header("Content-Type","application/json")
+				.body(newEmployee.toString()).when().post("http://localhost:" + port + "/employees").then().statusCode(200)
+				.extract().path("id").toString();
+
+		given().header("XRF-token","1234").header("Content-Type","application/json")
+				.body(newEmployee.toString()).when().put("http://localhost:" + port + "/employees/"+id).then().statusCode(201);
+	}
+
+	@Test
+	public void employeeCanBeDeleted() {
+		given().header("XRF-token","1234").when().delete("http://localhost:" + port + "/employees/1").then().statusCode(204);
+	}
 
 }
