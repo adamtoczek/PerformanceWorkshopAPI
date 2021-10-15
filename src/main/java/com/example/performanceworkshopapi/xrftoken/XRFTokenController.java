@@ -13,7 +13,9 @@ public class XRFTokenController {
     }
 
     @PostMapping("/xrf-token")
-    public XRFToken newXRFToken(XRFToken newXRFToken) {
-        return tokenRepo.save(newXRFToken);
+    public XRFTokenPOJO newXRFToken(XRFToken newXRFToken) {
+        XRFToken xrf = tokenRepo.save(newXRFToken);
+
+        return new XRFTokenPOJO(xrf);
     }
 }
