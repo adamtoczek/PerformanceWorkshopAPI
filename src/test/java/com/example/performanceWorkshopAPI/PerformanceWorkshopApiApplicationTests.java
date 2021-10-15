@@ -12,6 +12,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -35,17 +36,34 @@ class PerformanceWorkshopApiApplicationTests {
 	}
 
 	@Test
-	public void missingXRFHeaderShouldReturnBadRequest() throws Exception {
+	public void missingXRFHeaderShouldReturnBadRequest() {
 		given().when().get("http://localhost:" + port + "/employees/1").then().statusCode(400).body("error", equalTo("Bad Request"));
 	}
 
 	@Test
-	public void wrongXRFHeaderShouldReturnAnuthorised() throws Exception {
+	public void wrongXRFHeaderShouldReturnAnuthorised() {
 		String resp = given().header("XRF-token","12345").when().get("http://localhost:" + port + "/employees/1").then().statusCode(403).extract().response().getBody().asString();
 		assertThat(resp).isEqualTo("Unauthorised");
 	}
 	@Test
-	public void corectXRFHeaderShouldReturnEmployee() throws Exception {
+	public void corectXRFHeaderShouldReturnEmployee() {
 		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees/1").then().statusCode(200);
 	}
+
+	@Test
+	public void correctXRFShouldReturnAllEmployees () {
+		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees").then().statusCode(200).body("_embedded.employeeList", hasSize(1002));
+	}
+
+	@Test
+	public void firstNameShouldFilterEmployees () {
+		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees?firstName=Frodo").then().statusCode(200).body("_embedded.employeeList", hasSize(1));
+	}
+
+	@Test
+	public void lastNameShouldFilterEmployees () {
+		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees?lastName=Baggins").then().statusCode(200).body("_embedded.employeeList", hasSize(2));
+	}
+
+
 }
