@@ -1,8 +1,6 @@
 package com.example.performanceWorkshopAPI;
 
-import com.example.performanceWorkshopAPI.xrfToken.XRFToken;
 import com.example.performanceWorkshopAPI.xrfToken.XRFTokenController;
-import io.restassured.RestAssured;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -48,7 +46,7 @@ class PerformanceWorkshopApiApplicationTests {
 		assertThat(resp).isEqualTo("Unauthorised");
 	}
 	@Test
-	public void corectXRFHeaderShouldReturnEmployee() {
+	public void correctXRFHeaderShouldReturnEmployee() {
 		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees/1").then().statusCode(200);
 	}
 
