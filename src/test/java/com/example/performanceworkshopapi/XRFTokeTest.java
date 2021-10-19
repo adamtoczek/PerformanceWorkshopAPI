@@ -8,33 +8,33 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class XRFTokeTest {
     @Test
-    public void tokensShouldBeEquals() {
+    void tokensShouldBeEquals() {
         XRFToken t1 = new XRFToken("123456");
         XRFToken t2 = new XRFToken("123456");
         assertEquals(t1, t2);
     }
 
     @Test
-    public void tokenShouldNotEqualString(){
+    void tokenShouldNotEqualString(){
         XRFToken t1 = new XRFToken("123456");
         assertNotEquals(t1, "123456");
     }
 
     @Test
-    public void sameTokenShouldBeEqual(){
+    void sameTokenShouldBeEqual(){
         XRFToken t1 = new XRFToken("123456");
         assertEquals(t1, t1);
     }
 
     @Test
-    public void setIdOnTokenShouldChangeID() {
+    void setIdOnTokenShouldChangeID() {
         XRFToken token = new XRFToken();
         token.setId(789L);
         assertEquals(789L, token.getId());
     }
 
     @Test
-    public void setTokenOnTokenShouldChangeID() {
+    void setTokenOnTokenShouldChangeID() {
         XRFToken token = new XRFToken();
         token.setToken("456");
         assertEquals("456", token.getToken());
