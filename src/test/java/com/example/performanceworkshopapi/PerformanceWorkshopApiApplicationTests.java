@@ -36,37 +36,37 @@ class PerformanceWorkshopApiApplicationTests {
 	}
 
 	@Test
-	public void missingXRFHeaderShouldReturnBadRequest() {
+	void missingXRFHeaderShouldReturnBadRequest() {
 		given().when().get("http://localhost:" + port + "/employees/1").then().statusCode(400).body("error", equalTo("Bad Request"));
 	}
 
 	@Test
-	public void wrongXRFHeaderShouldReturnAnuthorised() {
+	void wrongXRFHeaderShouldReturnAnuthorised() {
 		String resp = given().header("XRF-token","12345").when().get("http://localhost:" + port + "/employees/1").then().statusCode(403).extract().response().getBody().asString();
 		assertThat(resp).isEqualTo("Unauthorised");
 	}
 	@Test
-	public void correctXRFHeaderShouldReturnEmployee() {
+	void correctXRFHeaderShouldReturnEmployee() {
 		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees/1").then().statusCode(200);
 	}
 
 	@Test
-	public void correctXRFShouldReturnAllEmployees () {
+	void correctXRFShouldReturnAllEmployees () {
 		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees").then().statusCode(200).body("_embedded.employeeList.size()", greaterThan(1001));
 	}
 
 	@Test
-	public void firstNameShouldFilterEmployees () {
+	void firstNameShouldFilterEmployees () {
 		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees?firstName=Frodo").then().statusCode(200).body("_embedded.employeeList", hasSize(1));
 	}
 
 	@Test
-	public void lastNameShouldFilterEmployees () {
+	void lastNameShouldFilterEmployees () {
 		given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees?lastName=Baggins").then().statusCode(200).body("_embedded.employeeList", hasSize(2));
 	}
 
 	@Test
-	public void employeeCanBeCreated() throws JSONException {
+	void employeeCanBeCreated() throws JSONException {
 		JSONObject newEmployee = new JSONObject();
 		newEmployee.put("firstName", "TestName");
 		newEmployee.put("lastName", "TestSurname");
@@ -75,7 +75,7 @@ class PerformanceWorkshopApiApplicationTests {
 	}
 
 	@Test
-	public void employeeCanBeUpdated() throws JSONException {
+	void employeeCanBeUpdated() throws JSONException {
 		JSONObject newEmployee = new JSONObject();
 		newEmployee.put("firstName", "TestName");
 		newEmployee.put("lastName", "TestSurname");
@@ -89,23 +89,23 @@ class PerformanceWorkshopApiApplicationTests {
 	}
 
 	@Test
-	public void employeeCanBeDeleted() {
+	void employeeCanBeDeleted() {
 		given().header("XRF-token","1234").when().delete("http://localhost:" + port + "/employees/1").then().statusCode(204);
 	}
 
 	@Test
-	public void userCanCreateXRFToken() {
+	void userCanCreateXRFToken() {
 		given().when().post("http://localhost:" + port + "/xrf-token").then().statusCode(200).body("token", hasLength(36));
 	}
 
 	@Test
-	public void notFoundEmployeeShouldGive404 () {
+	void notFoundEmployeeShouldGive404 () {
 		String body = given().header("XRF-token","1234").when().get("http://localhost:" + port + "/employees/987456321").then().statusCode(404).extract().response().getBody().asString();
 		assertEquals("Could not find employee 987456321", body);
 	}
 
 	@Test
-	public void putNewEmployeeShouldReturn201() throws JSONException {
+	void putNewEmployeeShouldReturn201() throws JSONException {
 		JSONObject newEmployee = new JSONObject();
 		newEmployee.put("firstName", "TestName");
 		newEmployee.put("lastName", "TestSurname");
