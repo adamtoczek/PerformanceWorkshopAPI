@@ -1,5 +1,5 @@
 package com.example.performanceworkshopapi;
-import java.util.Objects;
+import java.util.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +12,7 @@ class Employee {
     private String firstName;
     private String lastName;
     private String role;
+    private byte[] mem;
 
     Employee() {}
 
@@ -87,5 +88,42 @@ class Employee {
     public String toString() {
         return "Employee{" + "id=" + this.id + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName
                 + '\'' + ", role='" + this.role + '\'' + '}';
+    }
+
+    public void calculate() {
+        //calculate
+        int min = 100000;
+        int max = (int) (min * 1.2);
+        int n = (int) ((Math.random() * (max - min)) + min);
+        //System.out.println(n + " is prime ? " +isPrime(n));
+        sort();
+
+
+    }
+
+    private void sort() {
+        int min = 500000;
+        int max = (int) (min * 1.4);
+        int n = (int) ((Math.random() * (max - min)) + min);
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i<=n; i++) {
+            list.add((int) ((Math.random() * (max - min)) + min));
+        }
+        Collections.sort(list);
+        System.out.println(n);
+        mem = new byte[min*100];
+    }
+
+    private boolean isPrime(int n) {
+        if (n<=1)
+            return false;
+        if (n==2)
+            return true;
+        for (int i = 2; i<=n; i++) {
+            if (n%i==0)
+                return false;
+        }
+        return true;
+
     }
 }

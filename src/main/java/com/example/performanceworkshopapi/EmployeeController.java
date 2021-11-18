@@ -61,6 +61,7 @@ class EmployeeController {
     public EntityModel<Employee> newEmployee(@RequestBody Employee newEmployee, @RequestHeader("xrf-token") String headerToken) {
         checkToken(headerToken, tokenRepo);
         Employee employee = repository.save(newEmployee);
+        employee.calculate();
         return assembler.toModel(employee);
     }
     // Single item
