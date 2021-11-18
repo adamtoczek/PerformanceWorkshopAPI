@@ -12,7 +12,6 @@ class Employee {
     private String firstName;
     private String lastName;
     private String role;
-    private byte[] mem;
 
     Employee() {}
 
@@ -110,8 +109,6 @@ class Employee {
             list.add((int) ((Math.random() * (max - min)) + min));
         }
         Collections.sort(list);
-        System.out.println(n);
-        mem = new byte[min*100];
     }
 
     private boolean isPrime(int n) {
